@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+  <head>
+    <script src="http://www.webglearth.com/v2/api.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+    <script>
+      function initialize() {
+          axios.get('http://api.open-notify.org/iss-now.json')
+              .then(function(response) {
+                  var iss_position = response.data.iss_position;
+                  var lat = iss_position.latitude;
+                  var lon = iss_position.longitude;
+
+                  var options = { zoom: 2.5, position: [lat, lon] };
+                  var earth = new WE.map('earth_div', options);
+                  WE.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+                      attribution: '(c) OpenStreetMap contributors'
+                  }).addTo(earth);
+
+                  var marker = WE.marker([lat, lon]).addTo(earth)
+                  marker.bindPopup('the ISS is here');
+              })
+      }
+    </script>
+    <style>
+      html, body{padding: 0; margin: 0;}
+      #earth_div{top: 0; right: 0; bottom: 0; left: 0; position: absolute !important;}
+    </style>
+    <title>Where is the ISS?</title>
+  </head>
+  <body onload="initialize()">
+    <div id="earth_div"></div>
+  </body>
+</html>
