@@ -3,24 +3,7 @@
   <head>
     <script src="https://www.webglearth.com/v2/api.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@0.18.0/dist/axios.min.js"></script>
-    <script>
-      function initialize() {
-          axios.get('https://api.wheretheiss.at/v1/satellites/25544')
-              .then(function(response) {
-                  var lat = response.data.latitude;
-                  var lon = response.data.longitude;
-
-                  var options = { zoom: 2.5, position: [lat, lon] };
-                  var earth = new WE.map('earth_div', options);
-                  WE.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-                      attribution: '(c) OpenStreetMap contributors'
-                  }).addTo(earth);
-
-                  var marker = WE.marker([lat, lon]).addTo(earth)
-                  marker.bindPopup('the ISS is here');
-              })
-      }
-    </script>
+    <script src="app.js"></script>
     <style>
       html, body{padding: 0; margin: 0;}
       #earth_div{top: 0; right: 0; bottom: 0; left: 0; position: absolute !important;}
